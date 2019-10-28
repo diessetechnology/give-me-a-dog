@@ -12,11 +12,7 @@ import { FormattedNumber } from 'react-intl';
 
 import { makeSelectCurrentBreed } from 'containers/App/selectors';
 import ListItem from 'components/ListItem';
-import ImageGallery from 'react-image-gallery';
-import IssueIcon from './IssueIcon';
-import IssueLink from './IssueLink';
-import RepoLink from './RepoLink';
-import Wrapper from './Wrapper';
+import { Picture } from 'react-responsive-picture';
 
 export function DogImagesGallery(props) {
   const { item } = props;
@@ -26,13 +22,18 @@ export function DogImagesGallery(props) {
   // Put together the content of the repository
 
   const content = (
-    <Wrapper>
-      <ImageGallery items={{ original: item.message }} />
-    </Wrapper>
+    <Picture
+      src={item.message}
+      style={{
+        maxWidth: '65%',
+        display: 'block',
+        margin: '0 auto',
+        marginTop: '6px',
+      }}
+    />
   );
-
   // Render the content into a list item
-  return <ListItem key={`image-${currentBreed}`} item={content} />;
+  return content;
 }
 
 DogImagesGallery.propTypes = {

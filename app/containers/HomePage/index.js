@@ -14,7 +14,7 @@ import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import {
-  makeSelectRepos,
+  makeSelectImages,
   makeSelectLoading,
   makeSelectError,
 } from 'containers/App/selectors';
@@ -30,7 +30,7 @@ import { changeBreed } from './actions';
 import { makeSelectBreed } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import DogImages from '../../components/DogImages/index';
+import DogImagesGallery from '../DogImagesGallery/index';
 const key = 'home';
 
 export function HomePage({
@@ -99,6 +99,7 @@ export function HomePage({
           <i className="fas fa-paw" style={{ marginRight: '5px' }} />
           Dammi un cane
         </button>
+        <DogImagesGallery item={images} />
       </div>
     </article>
   );
@@ -120,6 +121,7 @@ const mapStateToProps = createStructuredSelector({
   breed: makeSelectBreed(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
+  images: makeSelectImages(),
 });
 
 export function mapDispatchToProps(dispatch) {

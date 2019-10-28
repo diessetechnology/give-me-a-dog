@@ -14,6 +14,7 @@ import HomePage from 'containers/HomePage/Loadable';
 import 'react-tiny-fab/dist/styles.css';
 import '@fortawesome/fontawesome-free/js/all';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-image-gallery/styles/css/image-gallery.css';
 import { Fab, Action } from 'react-tiny-fab';
 import GlobalStyle from '../../global-styles';
 

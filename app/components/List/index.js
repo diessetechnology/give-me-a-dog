@@ -10,9 +10,7 @@ function List(props) {
 
   // If we have items, render them
   if (props.items) {
-    content = props.items.map(item => (
-      <ComponentToRender key={`item-${item.id}`} item={item} />
-    ));
+    content = <ComponentToRender props={items} />;
   } else {
     // Otherwise render a single component
     content = <ComponentToRender />;

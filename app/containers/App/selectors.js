@@ -27,7 +27,7 @@ const makeSelectError = () =>
     globalState => globalState.error,
   );
 
-const makeSelectRepos = () =>
+const makeSelectImages = () =>
   createSelector(
     selectGlobal,
     globalState => globalState.images,
@@ -44,6 +44,6 @@ export {
   makeSelectCurrentBreed,
   makeSelectLoading,
   makeSelectError,
-  makeSelectRepos,
+  makeSelectImages,
   makeSelectLocation,
 };
