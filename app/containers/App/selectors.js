@@ -9,10 +9,10 @@ const selectGlobal = state => state.global || initialState;
 
 const selectRouter = state => state.router;
 
-const makeSelectCurrentUser = () =>
+const makeSelectCurrentBreed = () =>
   createSelector(
     selectGlobal,
-    globalState => globalState.currentUser,
+    globalState => globalState.currentBreed,
   );
 
 const makeSelectLoading = () =>
@@ -30,7 +30,7 @@ const makeSelectError = () =>
 const makeSelectRepos = () =>
   createSelector(
     selectGlobal,
-    globalState => globalState.userData.repositories,
+    globalState => globalState.images,
   );
 
 const makeSelectLocation = () =>
@@ -41,7 +41,7 @@ const makeSelectLocation = () =>
 
 export {
   selectGlobal,
-  makeSelectCurrentUser,
+  makeSelectCurrentBreed,
   makeSelectLoading,
   makeSelectError,
   makeSelectRepos,

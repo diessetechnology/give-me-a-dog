@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import ImageGallery from 'react-image-gallery';
 import List from 'components/List';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
-import RepoListItem from 'containers/RepoListItem';
+import DogImagesGallery from 'containers/DogImagesGallery';
 
-function ReposList({ loading, error, repos }) {
+function DogImages({ loading, error, images }) {
   if (loading) {
     return <List component={LoadingIndicator} />;
   }
@@ -18,17 +18,17 @@ function ReposList({ loading, error, repos }) {
     return <List component={ErrorComponent} />;
   }
 
-  if (repos !== false) {
-    return <List items={repos} component={RepoListItem} />;
+  if (images !== false) {
+    return <List items={images} component={DogImagesGallery} />;
   }
 
   return null;
 }
 
-ReposList.propTypes = {
+DogImages.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.any,
-  repos: PropTypes.any,
+  images: PropTypes.any,
 };
 
-export default ReposList;
+export default DogImages;

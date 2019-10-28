@@ -11,7 +11,6 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
 import {
@@ -19,42 +18,36 @@ import {
   makeSelectLoading,
   makeSelectError,
 } from 'containers/App/selectors';
-import H2 from 'components/H2';
-import ReposList from 'components/ReposList';
+import { Fab, Action } from 'react-tiny-fab';
 import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
 import Input from './Input';
 import Section from './Section';
 import messages from './messages';
-import { loadRepos } from '../App/actions';
-import { changeUsername } from './actions';
-import { makeSelectUsername } from './selectors';
+import { loadImages } from '../App/actions';
+import { changeBreed } from './actions';
+import { makeSelectBreed } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-
+import DogImages from '../../components/DogImages/index';
 const key = 'home';
 
 export function HomePage({
-  username,
+  breed,
   loading,
   error,
-  repos,
+  images,
   onSubmitForm,
-  onChangeUsername,
+  onChangeBreed,
 }) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  useEffect(() => {
-    // When initial state username is not null, submit the form to load repos
-    if (username && username.trim().length > 0) onSubmitForm();
-  }, []);
-
-  const reposListProps = {
+  const dogImagesProps = {
     loading,
     error,
-    repos,
+    images,
   };
 
   return (
@@ -66,36 +59,46 @@ export function HomePage({
           content="A React.js Boilerplate application homepage"
         />
       </Helmet>
-      <div>
-        <CenteredSection>
-          <H2>
-            <FormattedMessage {...messages.startProjectHeader} />
-          </H2>
-          <p>
-            <FormattedMessage {...messages.startProjectMessage} />
-          </p>
-        </CenteredSection>
-        <Section>
-          <H2>
-            <FormattedMessage {...messages.trymeHeader} />
-          </H2>
-          <Form onSubmit={onSubmitForm}>
-            <label htmlFor="username">
-              <FormattedMessage {...messages.trymeMessage} />
-              <AtPrefix>
-                <FormattedMessage {...messages.trymeAtPrefix} />
-              </AtPrefix>
-              <Input
-                id="username"
-                type="text"
-                placeholder="mxstbr"
-                value={username}
-                onChange={onChangeUsername}
-              />
-            </label>
-          </Form>
-          <ReposList {...reposListProps} />
-        </Section>
+      <div className="content">
+        <h3
+          style={{
+            fontFamily: 'Fredoka One',
+            textAlign: 'center',
+            fontSize: '1.7rem',
+          }}
+        >
+          Give Me A Dog!
+        </h3>
+        <h3
+          style={{
+            fontFamily: 'Fredoka One',
+            textAlign: 'center',
+            fontSize: '1.6rem',
+          }}
+        >
+          Inserisci una razza di 🐶 qui...e ti troverò una 🖼 di quel 🐶
+        </h3>
+        <input
+          id="breed"
+          className="form-control"
+          value={breed}
+          onChange={onChangeBreed}
+          style={{ width: '70%', margin: '0 auto' }}
+        />
+        <button
+          className="btn btn-primary"
+          onClick={onSubmitForm}
+          style={{
+            width: '70%',
+            margin: '0 auto',
+            display: 'block',
+            marginTop: '5px',
+            fontFamily: 'Fredoka One',
+          }}
+        >
+          <i className="fas fa-paw" style={{ marginRight: '5px' }} />
+          Dammi un cane
+        </button>
       </div>
     </article>
   );
@@ -104,25 +107,27 @@ export function HomePage({
 HomePage.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  images: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.bool,
+    PropTypes.object,
+  ]),
   onSubmitForm: PropTypes.func,
-  username: PropTypes.string,
-  onChangeUsername: PropTypes.func,
+  breed: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
-  username: makeSelectUsername(),
+  breed: makeSelectBreed(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
+    onChangeBreed: evt => dispatch(changeBreed(evt.target.value)),
     onSubmitForm: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadRepos());
+      dispatch(loadImages());
     },
   };
 }

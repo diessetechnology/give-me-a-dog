@@ -1,6 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
+import Background from './images/background.jpg';
 
 const GlobalStyle = createGlobalStyle`
+
+  @import "~react-image-gallery/styles/css/image-gallery.css";
+
   html,
   body {
     height: 100%;
@@ -10,6 +14,9 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-image: url(${Background});
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   body.fontLoaded {
@@ -17,9 +24,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #app {
-    background-color: #fafafa;
-    min-height: 100%;
-    min-width: 100%;
+    height: 90%;
+    width: 90%;
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+    background-color:  rgba(255, 255, 255, 0.7);
+    border-radius: 15px
   }
 
   p,
