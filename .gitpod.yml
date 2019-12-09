@@ -7,8 +7,37 @@ ports:
 
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/44_config_start_tasks/
 tasks:
-- init: echo 'init script' # runs during prebuild
-  command: echo 'start script'
+- command: |
+    clear
+    export DOCKER_HOST=tcp://localhost:2375
+    echo "once the setup is done, try running $(tput setaf 2)docker ps"
+    echo
+- command: |
+    clear
+    gp await-port 9000 &&
+    remote=$(gp url 9000)
+    echo
+    echo "Inlets server is running on $(gp url 9000)."
+    echo "$(tput setaf 7)Connect your local Docker daemon by running"
+    echo
+    echo "$(tput setaf 2)inlets client --remote=${remote/https/wss} \\"
+    echo "$(tput setaf 2)  --token $(cat /tmp/inlets-token) \\"
+    echo "$(tput setaf 2)  --upstream=http://127.0.0.1:2375$(tput sgr0)"
+    echo
+    echo "on your local machine."
+    echo
+    echo "In the example above, $(tput setaf 3)your local Docker daemon must listen on port 2375.$(tput sgr0)"
+    echo
+    echo "Locally run the following to expose your Docker socket on 127.0.0.1:2375"
+    echo "$(tput setaf 3)  docker run --name expose-docker --rm -d -v /var/run/docker.sock:/var/run/docker.sock \\"
+    echo "$(tput setaf 3)     -p 127.0.0.1:2375:2375 alpine/socat TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock"
+    read
+  openMode: split-right
+- command: |
+    head -c 16 /dev/urandom | shasum | cut -d" " -f1 > /tmp/inlets-token
+    inlets server --control-port=9000 --port 2375 --token="$(cat /tmp/inlets-token)"
+  openMode: split-bottom
+
 
 vscode:
   extensions:
@@ -19,3 +48,8 @@ vscode:
     - christian-kohler.path-intellisense@1.4.2:QnOrf5fk6KiVaQs4cNEP+w==
     - redhat.fabric8-analytics@0.0.13:k9RQ8fqmg2WmkP2sL4ccbA==
     - cosformula.vscode-drone-status@0.0.4:gp7txvVDwF7BOoVU8XjTQw==
+ports:
+- port: 9000
+  onOpen: ignore
+- port: 2375-2376
+  onOpen: ignore
