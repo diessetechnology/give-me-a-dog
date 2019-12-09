@@ -14,7 +14,6 @@ import HomePage from 'containers/HomePage/Loadable';
 import 'react-tiny-fab/dist/styles.css';
 import '@fortawesome/fontawesome-free/js/all';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-image-gallery/styles/css/image-gallery.css';
 import { Fab, Action } from 'react-tiny-fab';
 import GlobalStyle from '../../global-styles';
 
@@ -28,15 +27,11 @@ const AppWrapper = styled.div`
 export default function App() {
   return (
     <AppWrapper>
-      <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
-      >
-        <link
-          href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap"
-          rel="stylesheet"
+      <Helmet titleTemplate="Give Me A Dog!" defaultTitle="Give Me A Dog!">
+        <meta
+          name="description"
+          content="You give me a dog breed,i give you a random image of that dog breed / Tu mi dai una razza di cane,io ti do una foto casuale di quel cane"
         />
-        <meta name="description" content="A React.js Boilerplate application" />
       </Helmet>
       <Switch>
         <Route exact path="/" component={HomePage} />

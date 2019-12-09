@@ -6,6 +6,8 @@ const OfflinePlugin = require('offline-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const BrotliPlugin = require('brotli-webpack-plugin');
+const ImageminWebpWebpackPlugin = require('imagemin-webp-webpack-plugin');
 
 module.exports = require('./webpack.base.babel')({
   mode: 'production',
@@ -110,15 +112,22 @@ module.exports = require('./webpack.base.babel')({
 
     new CompressionPlugin({
       algorithm: 'gzip',
-      test: /\.js$|\.css$|\.html$/,
+      test: /\.js$|\.css$|\.html$|\.jpg$/,
       threshold: 10240,
       minRatio: 0.8,
     }),
-
+    new BrotliPlugin({
+      // brotli plugin
+      asset: '[path].br[query]',
+      test: /\.(js|css|html|svg)$/,
+      threshold: 10240,
+      minRatio: 0.8,
+    }),
     new WebpackPwaManifest({
-      name: 'React Boilerplate',
-      short_name: 'React BP',
-      description: 'My React Boilerplate-based project!',
+      name: 'Give Me A Dog',
+      short_name: 'GMAD',
+      description:
+        'You give me a dog breed,i give you a random image of that dog breed / Tu mi dai una razza di cane,io ti do una foto casuale di quel cane',
       background_color: '#fafafa',
       theme_color: '#b1624d',
       inject: true,
@@ -141,6 +150,7 @@ module.exports = require('./webpack.base.babel')({
       hashDigest: 'hex',
       hashDigestLength: 20,
     }),
+    new ImageminWebpWebpackPlugin(),
   ],
 
   performance: {

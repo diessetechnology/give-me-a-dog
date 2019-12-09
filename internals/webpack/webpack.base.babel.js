@@ -4,6 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const GoogleFontsPlugin = require('google-fonts-plugin');
 
 module.exports = options => ({
   mode: options.mode,
@@ -38,7 +39,7 @@ module.exports = options => ({
       {
         // Preprocess 3rd party .css files located in node_modules
         test: /\.css$/,
-        include: /node_modules/,
+        include: /node_modules|assets/,
         use: ['style-loader', 'css-loader'],
       },
       {
@@ -72,7 +73,8 @@ module.exports = options => ({
             loader: 'image-webpack-loader',
             options: {
               mozjpeg: {
-                enabled: false,
+                enabled: true,
+                progressive: true,
                 // NOTE: mozjpeg is disabled as it causes errors in some Linux environments
                 // Try enabling it in your environment by switching the config to:
                 // enabled: true,
@@ -87,6 +89,10 @@ module.exports = options => ({
               pngquant: {
                 quality: '65-90',
                 speed: 4,
+              },
+              // the webp option will enable WEBP
+              webp: {
+                quality: 75,
               },
             },
           },
@@ -120,7 +126,7 @@ module.exports = options => ({
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
   },
-  devtool: options.devtool,
+  devtool: 'cheap-module-source-map',
   target: 'web', // Make web variables accessible to webpack, e.g. window
   performance: options.performance || {},
 });

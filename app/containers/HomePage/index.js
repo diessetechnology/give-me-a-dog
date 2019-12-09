@@ -19,11 +19,6 @@ import {
   makeSelectError,
 } from 'containers/App/selectors';
 import { Fab, Action } from 'react-tiny-fab';
-import AtPrefix from './AtPrefix';
-import CenteredSection from './CenteredSection';
-import Form from './Form';
-import Input from './Input';
-import Section from './Section';
 import messages from './messages';
 import { loadImages } from '../App/actions';
 import { changeBreed } from './actions';
@@ -53,10 +48,10 @@ export function HomePage({
   return (
     <article>
       <Helmet>
-        <title>Home Page</title>
+        <title>Give Me A Dog!</title>
         <meta
           name="description"
-          content="A React.js Boilerplate application homepage"
+          content="You give me a dog breed,i give you a random image of that dog breed / Tu mi dai una razza di cane,io ti do una foto casuale di quel cane"
         />
       </Helmet>
       <div className="content">
